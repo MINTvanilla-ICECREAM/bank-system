@@ -8,7 +8,7 @@
         body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
         input, select { margin: 5px; padding: 8px; width: 200px; }
         button { padding: 10px 20px; margin: 10px; cursor: pointer; }
-        .menu, .page { display: none; }
+        .menu, .page { display: none; } /* 确保菜单默认隐藏 */
         table { width: 80%; margin: 10px auto; border-collapse: collapse; }
         th, td { border: 1px solid black; padding: 8px; text-align: center; }
     </style>
@@ -81,6 +81,12 @@
     </div>
 
     <script>
+        // **确保页面加载时显示登录界面**
+        window.onload = function() {
+            document.querySelectorAll(".menu, .page").forEach(el => el.style.display = "none");
+            document.getElementById("login").style.display = "block"; 
+        };
+
         function toggleMenu(menuId) {
             document.querySelectorAll(".menu, .page").forEach(el => el.style.display = "none");
             document.getElementById(menuId).style.display = "block";
