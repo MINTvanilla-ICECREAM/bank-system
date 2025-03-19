@@ -21,7 +21,8 @@
         <label>用户名: <input id="username" type="text"></label><br>
         <label>密码: <input id="password" type="password"></label><br>
         <button onclick="login()">登录</button>
-        <p id="login-message"></p>
+        <button onclick="register()">注册</button>
+        <p id="login-message" style="color: red;"></p>
     </div>
 
     <div id="dashboard">
@@ -53,20 +54,40 @@
     </div>
 
     <script>
-        let users = { "admin": "admin123", "user1": "pass1", "user2": "pass2" };
-        let transactions = [];
+        // 加载存储的用户数据
+        let users = JSON.parse(localStorage.getItem("users")) || { "admin": "admin123" };
 
         function login() {
-            let username = document.getElementById("username").value;
-            let password = document.getElementById("password").value;
+            let username = document.getElementById("username").value.trim();
+            let password = document.getElementById("password").value.trim();
             
             if (users[username] && users[username] === password) {
                 document.getElementById("login").style.display = "none";
                 document.getElementById("dashboard").style.display = "block";
                 document.getElementById("user").innerText = username;
+                document.getElementById("login-message").innerText = ""; // 清空错误消息
             } else {
                 document.getElementById("login-message").innerText = "登录失败，用户名或密码错误！";
             }
+        }
+
+        function register() {
+            let newUsername = prompt("请输入新用户名:");
+            let newPassword = prompt("请输入密码:");
+
+            if (!newUsername || !newPassword) {
+                alert("用户名或密码不能为空！");
+                return;
+            }
+
+            if (users[newUsername]) {
+                alert("用户名已存在，请换一个！");
+                return;
+            }
+
+            users[newUsername] = newPassword;
+            localStorage.setItem("users", JSON.stringify(users)); // 存储到浏览器
+            alert("注册成功！请使用新账号登录。");
         }
 
         function showTransactionPanel() {
