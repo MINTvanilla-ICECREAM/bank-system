@@ -33,17 +33,24 @@
         <button onclick="logout()">退出</button>
     </div>
 
+    <!-- 账户管理 -->
     <div id="account-menu" class="menu">
         <h3>账户管理</h3>
         <button onclick="showPage('account-info')">账户信息</button>
         <button onclick="showPage('contacts')">联系人</button>
         <button onclick="addContact()">添加联系人</button>
-        <button onclick="changePassword()">修改密码</button>
-        <button onclick="lockAccount()">锁定账户</button>
-        <button onclick="deleteAccount()">注销账户</button>
         <button onclick="toggleMenu('dashboard')">返回</button>
     </div>
 
+    <div id="account-info" class="page">
+        <h3>账户信息</h3>
+        <p>用户名: <span id="account-username"></span></p>
+        <p>银行卡号: <span id="account-card"></span></p>
+        <p>账户余额: <span id="account-balance"></span> 元</p>
+        <button onclick="toggleMenu('account-menu')">返回</button>
+    </div>
+
+    <!-- 交易管理 -->
     <div id="transaction-menu" class="menu">
         <h3>交易管理</h3>
         <button onclick="showPage('transactions')">转账</button>
@@ -53,15 +60,30 @@
         <button onclick="toggleMenu('dashboard')">返回</button>
     </div>
 
-    <script>
-        window.onload = function() {
-            document.querySelectorAll(".menu, .page").forEach(el => el.style.display = "none");
-            document.getElementById("login").style.display = "block"; 
-        };
+    <div id="history" class="page">
+        <h3>交易记录</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>交易时间</th>
+                    <th>类型</th>
+                    <th>金额</th>
+                </tr>
+            </thead>
+            <tbody id="history-table"></tbody>
+        </table>
+        <button onclick="toggleMenu('transaction-menu')">返回</button>
+    </div>
 
+    <script>
         function toggleMenu(menuId) {
             document.querySelectorAll(".menu, .page").forEach(el => el.style.display = "none");
             document.getElementById(menuId).style.display = "block";
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll(".page").forEach(el => el.style.display = "none");
+            document.getElementById(pageId).style.display = "block";
         }
 
         function login() {
@@ -125,6 +147,11 @@
 
             showPage("history");
         }
+
+        window.onload = function() {
+            document.querySelectorAll(".menu, .page").forEach(el => el.style.display = "none");
+            document.getElementById("login").style.display = "block"; 
+        };
     </script>
 
 </body>
